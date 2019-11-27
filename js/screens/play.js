@@ -8,8 +8,10 @@ game.PlayScreen = me.ScreenObject.extend({
      *  action to perform on state change
      */
     onResetEvent: function() {
-        me.game.world.addChild(new me.ColorLayer("background", "#000000"), 0);
-        this.player = me.pool.pull("player",0, me.game.viewport.height /2);
+        game.data.score = 0;
+        // me.game.world.addChild(new me.ColorLayer("background", "#82E0AA"), 0);
+        me.game.world.addChild(new me.ColorLayer("background", "#fff"), 0);
+        this.player = me.pool.pull("player", 60, me.game.viewport.height /2);
         me.game.world.addChild(this.player, 1);
 
         me.input.bindKey(me.input.KEY.LEFT, "left");
@@ -17,6 +19,9 @@ game.PlayScreen = me.ScreenObject.extend({
         me.input.bindKey(me.input.KEY.A, "left");
         me.input.bindKey(me.input.KEY.D, "right");
         me.input.bindKey(me.input.KEY.SPACE, "shoot", true);
+
+        this.HUD = new game.HUD.Container();
+        me.game.world.addChild(this.HUD, 11);
 
         this.wallManager = new game.WallManager();
         me.game.world.addChild(this.wallManager),2;

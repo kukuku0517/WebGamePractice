@@ -1,18 +1,33 @@
 
 /* Game namespace */
 var game = {
-
+  
     // an object where to store game information
     data : {
         // score
-        score : 0
+        score : 0,
+        combo : 0,
+        color : "r",
+        level : {
+            speed : 400,
+            wallFrequency :10,
+            starFrequency : 100,
+            holeSizeMax :600,
+            holeSizeMin : 400,
+            holeRatio : 0.01,
+            wallVelMin : 10,
+            wallVelMax : 15,
+            wallVelRatio : 0.002,
+            playerVel : 200
+        }
+       
     },
 
     // Run on page load.
     "onload" : function () {
 
         // Initialize the video.
-        if (!me.video.init(960, 640, {wrapper : "screen", scale : "auto"})) {
+        if (!me.video.init(960, 960, {wrapper : "screen", scale : "auto"})) {
             alert("Your browser does not support HTML5 canvas.");
             return;
         }
@@ -43,6 +58,7 @@ var game = {
         me.pool.register("player",game.Player)
         me.pool.register("laser", game.Laser);
         me.pool.register("wall",game.Wall)
+        me.pool.register("star",game.Star)
         me.state.set(me.state.MENU, new game.TitleScreen());
 //        me.state.set(me.state.PLAY, new game.PlayScreen());
 
