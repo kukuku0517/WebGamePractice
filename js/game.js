@@ -49,9 +49,11 @@ var game = {
 
     // Run on game resources loaded.
     "loaded" : function () {
+
         // this.playScreen = new game.RunPlayScreen();
         // me.state.set(me.state.PLAY, this.playScreen);
 
+        this.mode = 'eat'
         this.eatPlayScreen = new game.EatPlayScreen();
         me.state.set(me.state.PLAY, this.eatPlayScreen);
 

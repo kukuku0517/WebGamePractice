@@ -7,9 +7,7 @@ game.FoodManager = me.Renderable.extend({
         this.sectionGenerate = 0;
         this.deltaY= 10;
 
-        this.wallFrequency = game.data.level.wallFrequency;
-        this.starFrequency = game.data.level.starFrequency;
-        this.pipeHoleSize = game.data.level.holeSizeMax;
+        this.wallFrequency = eatData.level.foodFreq;
         this.posX = me.game.viewport.width + 80;
         this.posY = me.game.viewport.height /2;
         
