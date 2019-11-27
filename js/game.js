@@ -49,15 +49,20 @@ var game = {
 
     // Run on game resources loaded.
     "loaded" : function () {
-        this.playScreen = new game.PlayScreen();
-        me.state.set(me.state.PLAY, this.playScreen);
+        // this.playScreen = new game.RunPlayScreen();
+        // me.state.set(me.state.PLAY, this.playScreen);
+
+        this.eatPlayScreen = new game.EatPlayScreen();
+        me.state.set(me.state.PLAY, this.eatPlayScreen);
 
             // start the game
 //        me.state.change(me.state.PLAY);
 
         me.pool.register("player",game.Player)
-        me.pool.register("laser", game.Laser);
+        me.pool.register("runPlayer",game.RunPlayer)
+
         me.pool.register("wall",game.Wall)
+        me.pool.register("food",game.Food)
         me.pool.register("star",game.Star)
         me.state.set(me.state.MENU, new game.TitleScreen());
 //        me.state.set(me.state.PLAY, new game.PlayScreen());
