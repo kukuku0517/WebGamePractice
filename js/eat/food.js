@@ -30,10 +30,13 @@ game.Food = me.Entity.extend({
    
       var player =  game.eatPlayScreen.player;
       var collisionWithPlayer =player.checkCollisionWith(this)
-    //   console.log(collisionWithPlayer)
+
       if(collisionWithPlayer){
-          
-          player.register(this, true)
+          if(!this.registered){
+            player.register(this, true)
+            this.registered = true;
+          }
+            
       }else{
           player.register(this, false)
       }

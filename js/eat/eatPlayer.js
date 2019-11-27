@@ -16,7 +16,7 @@ game.RunPlayer = me.Entity.extend({
       
 
       this.renderable.addAnimation('idle', [1]);
-      this.renderable.addAnimation('eat', [0,1,2,3]);
+      this.renderable.addAnimation('eat', [0,1]);
       this.renderable.scale(3)
       this.renderable.setCurrentAnimation('idle');
 
@@ -32,27 +32,31 @@ game.RunPlayer = me.Entity.extend({
     this._super(me.Entity, "update", [time]);
     var that = this;
 
-    var currentFood = this.currentFood;
-
-    if (me.input.isKeyPressed("shoot") && currentFood!=null) {
-        if(!this.renderable.isCurrentAnimation('eat')){
-            this.isEating=true;
-
-            console.log(currentFood)
-                        if(currentFood.isMeat){
-                eatData.health -= 10
-            }else{
-                eatData.health += 10
+    if(me.input.isKeyPressed("shoot")){
+      if (this.currentFood!=null) {
+            if(!this.renderable.isCurrentAnimation('eat')){
+                this.isEating=true;
+                if(this.currentFood.isMeat){
+                    eatData.health -= 10
+                }else{
+                    eatData.health += 10
+                }
+                if(me.game.world.hasChild(this.currentFood)){
+                    me.game.world.removeChild(this.currentFood);
+                }
+                this.currentFood = null;
+                console.log('food eaten.')
+                this.renderable.setCurrentAnimation('eat', function(){
+                    that.isEating = false
+                    that.renderable.setCurrentAnimation('idle')
+                })
             }
-            if(me.game.world.hasChild(currentFood)){
-                me.game.world.removeChild(currentFood);
-            }
-            this.renderable.setCurrentAnimation('eat', function(){
-                that.isEating = false
-                that.renderable.setCurrentAnimation('idle')
-            })
+        }else{
+            console.log('no food registered')
         }
     }
+
+
 
     return true;
   },
@@ -65,12 +69,13 @@ checkCollisionWith: function(other){
     return collision;
 },
 register: function(food, shouldRegister){
+    
     if(this.currentFood != food && shouldRegister){
-        console.log('register')
         this.currentFood = food;
     }else if (this.currentFood == food && !shouldRegister){
-        console.log('unregister')
-        this.currentFood = null; 
+          this.currentFood = null; 
+        
+     
     }
 }
 });
